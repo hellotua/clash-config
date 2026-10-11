@@ -1,0 +1,310 @@
+# ---------------------------------------------------
+# 🔮 MIHOMO (CLASH META) CONFIG - UPDATED
+# ---------------------------------------------------
+
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver: [1.1.1.1, 8.8.8.8]
+  nameserver:
+    - 'https://dns.alidns.com/dns-query'
+    - 'https://doh.pub/dns-query'
+
+# 🛰️ 代理节点
+proxies:
+  # --- 1. 中转节点 (香港亚马逊) ---
+  - name: "🇭🇰 亚马逊精品线路1 ✨"
+    type: ssr
+    server: jp-am39.eqnode.net
+    port: 8081
+    password: "vv6w6vvLR"
+    cipher: aes-256-cfb
+    protocol: origin
+    protocol-param: ""
+    obfs: tls1.2_ticket_auth
+    obfs-param: "cloudfront.net"
+    udp: true
+
+  - name: "🇭🇰 亚马逊精品线路2 ✨"
+    type: ssr
+    server: sg-am19.eqsunshine.com
+    port: 8080
+    cipher: aes-256-cfb
+    password: QXNiwug7j
+    protocol: origin
+    obfs: tls1.2_ticket_auth
+    protocol-param: ""
+    obfs-param: cloudfront.net
+    udp: true  
+
+  - name: "🇭🇰 中国移动跨境专线⚡香港vmess"
+    alterId: 0
+    cipher: auto
+    client-fingerprint: chrome
+    network: ws
+    port: 10387
+    server: www.hellotua.xyz
+    servername: www.hellotua.xyz
+    tls: true
+    type: vmess
+    udp: true
+    uuid: f4993587-88ae-4d0f-a334-1fe2b3f27015
+    ws-opts:
+      headers:
+        Host: www.hellotua.xyz
+      path: /vmess
+
+  - name: "🇭🇰 中国移动跨境专线⚡香港vless"
+    client-fingerprint: chrome
+    network: tcp
+    packet-encoding: none
+    port: 53138
+    reality-opts:
+      public-key: OEt3NPLj0h0QIpHIfXeR09rnownpLC6OtUj1-mXVxWg
+      short-id: 42a4b6801ac3d5
+    server: www.hellotua.xyz
+    servername: www.amd.com
+    tls: true
+    type: vless
+    udp: true
+    uuid: 1a27b5dd-a0de-43bb-812e-df4ffb90dbae
+
+  # --- 香港h2 节点 ---
+  - name: "🇭🇰 中国移动跨境专线⚡香港h2"
+    alpn:
+    - h3
+    client-fingerprint: chrome
+    password: SNmn8IP8lW
+    port: 15822
+    server: www.hellotua.xyz
+    sni: www.hellotua.xyz
+    type: hysteria2
+    udp: true
+
+  - name: "🇲🇴 中国澳门vless"
+    type: vless
+    server: cdns.doon.eu.org
+    port: 443
+    uuid: 2eb5ae06-828e-4a54-9f64-b7ba8641ebb7
+    tls: true
+    udp: true
+    servername: testament-paste-teeth-specials.trycloudflare.com
+    network: ws
+    ws-opts:
+      path: /vless-argo?ed=2560
+      headers:
+        Host: testament-paste-teeth-specials.trycloudflare.com
+    client-fingerprint: chrome
+
+  - name: "🇲🇴 中国澳门vmess"
+    type: vmess
+    server: cdns.doon.eu.org
+    port: 443
+    uuid: 2eb5ae06-828e-4a54-9f64-b7ba8641ebb7
+    alterId: 0
+    cipher: auto
+    tls: true
+    udp: true
+    servername: testament-paste-teeth-specials.trycloudflare.com
+    network: ws
+    ws-opts:
+      path: /vmess-argo?ed=2560
+      headers:
+        Host: testament-paste-teeth-specials.trycloudflare.com
+    client-fingerprint: chrome
+
+  - name: "🇲🇴 中国澳门(香港中转1)"
+    type: vless
+    server: 45.202.247.244
+    port: 46564
+    uuid: 2eb5ae06-828e-4a54-9f64-b7ba8641ebb7
+    cipher: none
+    tls: true
+    reality-opts:
+      public-key: 7lFgCJRJsrddXimphTZOIO3XCepW5HJ8b3QHLbY4RF4
+    client-fingerprint: chrome
+    skip-cert-verify: true
+    servername: www.iij.ad.jp
+    network: grpc
+    grpc-opts:
+      grpc-service-name: "grpc"
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  # Node 2: xhttp Protocol
+  - name: "🇲🇴 中国澳门(香港中转2)"
+    type: vless
+    server: 45.202.247.244
+    port: 46565
+    uuid: 2eb5ae06-828e-4a54-9f64-b7ba8641ebb7
+    cipher: none
+    tls: true
+    reality-opts:
+      public-key: 7lFgCJRJsrddXimphTZOIO3XCepW5HJ8b3QHLbY4RF4
+    client-fingerprint: chrome
+    skip-cert-verify: true
+    servername: www.nazhumi.com
+    network: xhttp
+    xhttp-opts:
+      mode: auto
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  - name: "🇲🇴 中国澳门(亚马逊中转)"  
+    type: vless
+    server: 45.202.247.244
+    port: 46564
+    uuid: 2eb5ae06-828e-4a54-9f64-b7ba8641ebb7
+    cipher: none
+    tls: true
+    reality-opts:
+      public-key: 7lFgCJRJsrddXimphTZOIO3XCepW5HJ8b3QHLbY4RF4
+    client-fingerprint: chrome
+    skip-cert-verify: true
+    servername: www.iij.ad.jp
+    network: grpc
+    grpc-opts:
+      grpc-service-name: "grpc"
+    dialer-proxy: "🇭🇰 亚马逊精品线路2 ✨"
+
+  - name: "🇺🇸 美国洛杉矶vless"
+    client-fingerprint: chrome
+    network: tcp
+    packet-encoding: none
+    port: 31086
+    reality-opts:
+      public-key: ny3AACi9mZ8vJKJ4kp-ZmIUX2YjSDKEMTl5APCjd_Sg
+      short-id: e415f5224b
+    server: liang.hellotua.xyz
+    servername: www.intel.com
+    tls: true
+    type: vless
+    udp: true
+    uuid: b899a909-c5a7-49c0-91af-3cde4d2f4106
+    dialer-proxy: "🇭🇰 亚马逊精品线路1 ✨"
+
+  - name: "🇺🇸 美国洛杉矶hy2"
+    alpn:
+    - h2
+    - http/1.1
+    client-fingerprint: chrome
+    obfs: salamander
+    obfs-password: tgf2evs8w411emeq
+    password: 4wk0hk5q9c2bedoq
+    port: 13045
+    server: liang.hellotua.xyz
+    sni: liang.hellotua.xyz
+    type: hysteria2
+    udp: true  
+
+  # --- ☁️ Cloudflare 节点组 ---
+
+  - name: "🇹🇼 中国台北-中华电信1"
+    type: ss
+    server: r3mrcg00129437x.cybervena.com
+    port: 50099
+    cipher: chacha20-ietf-poly1305
+    password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  - name: "🇹🇼 中国台北-中华电信2"
+    type: ss
+    server: r3mrcg007134n4g.cybervena.com
+    port: 50099
+    cipher: chacha20-ietf-poly1305
+    password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  - name: "🇹🇼 中国台北-中华电信3"
+    type: ss
+    server: r3mrcg001287h3p.cybervena.com
+    port: 50099
+    cipher: chacha20-ietf-poly1305
+    password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  - name: "🇹🇼 中国台北-中华电信4"
+    type: ss
+    server: r3mrcg001269pz2.cybervena.com
+    port: 50099
+    cipher: chacha20-ietf-poly1305
+    password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  - name: "🇹🇼 中国台北-中华电信5"
+    type: ss
+    server: r3mrcg001286ek2.cybervena.com
+    port: 50099
+    cipher: chacha20-ietf-poly1305
+    password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  - name: "🇹🇼 中国台北-中华电信6"
+    type: ss
+    server: r3mrcg001287h3p.cybervena.com
+    port: 50099
+    cipher: chacha20-ietf-poly1305
+    password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+  - name: "🇹🇼 中国台北-中华电信7"
+    type: ss
+    server: r3mrcg00129437x.cybervena.com
+    port: 50099
+    cipher: chacha20-ietf-poly1305
+    password: 7e731ec3-f8e1-43f6-92cf-3978d14705c4
+    dialer-proxy: "🇭🇰 中国移动跨境专线⚡香港h2"
+
+# ---------------------------------------------------
+# 🧩 策略组
+# ---------------------------------------------------
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    proxies:
+      - 🛡️ 跨境专线组
+      - ☁️ 家庭宽带节点组
+      - DIRECT
+
+  - name: 🛡️ 跨境专线组
+    type: select
+    proxies:
+      - "🇭🇰 中国移动跨境专线⚡香港vmess"
+      - "🇭🇰 中国移动跨境专线⚡香港vless"
+      - "🇭🇰 中国移动跨境专线⚡香港h2"
+      - "🇲🇴 中国澳门vless"
+      - "🇲🇴 中国澳门vmess"
+      - "🇲🇴 中国澳门(香港中转1)"
+      - "🇲🇴 中国澳门(香港中转2)"
+      - "🇲🇴 中国澳门(亚马逊中转)"
+      - "🇺🇸 美国洛杉矶vless"
+      - "🇺🇸 美国洛杉矶hy2"
+
+  - name: ☁️ 家庭宽带节点组
+    type: select
+    proxies:
+      - "🇹🇼 中国台北-中华电信1"
+      - "🇹🇼 中国台北-中华电信2"
+      - "🇹🇼 中国台北-中华电信3"
+      - "🇹🇼 中国台北-中华电信4"
+      - "🇹🇼 中国台北-中华电信5"
+      - "🇹🇼 中国台北-中华电信6"
+      - "🇹🇼 中国台北-中华电信7"
+
+# ---------------------------------------------------
+# 📝 路由规则
+# ---------------------------------------------------
+rules:
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - GEOIP,CN,DIRECT
+  - MATCH,🚀 节点选择
